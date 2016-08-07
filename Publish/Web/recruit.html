@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:og="http://ogp.me/ns#" >
+<head>
+	<link href="icon.ico" rel="SHORTCUT ICON">
+	<title>零時空汙觀測網</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CSS/style.css">
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class='row col-xs-12'>
+		<div class='col-md-10 col-md-offset-1'>
+			<a href="/map.html"><img src="Pic/icons/g0v.png" height='75px' id="titlepic"></a>
+			<a style="font-size: 35px" href="/recruit.html" onClick="ga('send', 'event', 'Link', 'Click', 'recruit');">
+				<img src="Pic/icons/recruit2.png" height='40px'>
+				<span class="glyphicon glyphicon-hand-left"></span>
+			</a>
+		</div>
+	</div>
+	<div class='row col-xs-12' style="margin-top: 30px;">
+		<div class='col-md-10 col-md-offset-1' style="padding: 0px 60px 0px 60px;">
+			<h3><strong><span class="glyphicon glyphicon-question-sign"></span>&nbsp為何需要自造測站</strong></h3>
+			<p style="padding: 0px 30px 0px 30px">零時觀測網的任務為彙整官方與非官方的空氣品質觀測資料，測站的數量越多則可使空汙追蹤的解析度提高。
+			然而官方的大型測站在地理分布數量與更新頻率上並不足夠，社群自造的低成本物聯網感測器即是這時代的互補解決方案。</p>
+		</div>
+	</div>
+	<div class='row col-xs-12'>
+		<div class='col-md-10 col-md-offset-1' style="padding: 0px 60px 0px 60px;">
+			<h3><strong><span class="glyphicon glyphicon-map-marker"></span>&nbsp立即加入空汙感測器自造社群的行列動手做:</strong></h3>
+			<p style="padding: 0px 30px 0px 30px">以下為各社群自造感測器的方案，觀測到的資料皆可即時呈現於g0v零時空汙觀測網。</p>
+			<div class='col-xs-12'>
+				<div class='col-xs-12 col-md-4'>
+					<div class="vertical-center" width="100%">
+						<img class="center-block" src="Pic/icons/PClogo.png" style="max-width: 100%">
+					</div>
+					<div class='col-xs-12'>
+						<p class="text-center">ProbeCube是基於開源硬體的物聯網專案，志在提供大眾可以輕鬆動手自造WiFi連網的空汙感測器方案，目前亦為g0v空汙觀測的支援性專案，推廣測站提高觀測網空汙追蹤能力。</p>
+						<p class="text-center">( 
+							<a target="_blank" onClick="ga('send', 'event', 'Link', 'Click', 'PC-github');" href="https://github.com/Lafudoci/ProbeCube">GitHub原始碼</a> | 
+							<a target="_blank" onClick="ga('send', 'event', 'Link', 'Click', 'PC-hackpad');" href="http://beta.hackfoldr.org/g0vairmap/g0v--rp53Cw7woim"> Hackpad共筆</a> | 
+							<a target="_blank" onClick="ga('send', 'event', 'Link', 'Click', 'PC-fb');" href="https://www.facebook.com/groups/g0v.general/"> 社群討論</a> )</p>
+					</div>
+				</div>
+				<div class='col-xs-12 col-md-4'>
+					<div class="vertical-center" width="100%">
+						<img class="center-block" src="Pic/icons/LASS.jpg" style="max-width: 100%">
+					</div>
+					<div class='col-xs-12'>
+						<p class="text-center">LASS是開源公益的環境感測器網路計畫，系統完成度高、門檻低，支援平台眾多，賦予Maker自行客製各種感測能力，所有感測資料皆自由開放以利各種衍生專案與應用。</p>
+						<p class="text-center">( 
+							<a target="_blank" onClick="ga('send', 'event', 'Link', 'Click', 'LASS-github');" href="https://github.com/LinkItONEDevGroup/LASS">GitHub原始碼</a> | 
+							<a target="_blank" onClick="ga('send', 'event', 'Link', 'Click', 'LASS-hackpad');" href="https://lass.hackpad.com/"> Hackpad共筆</a> | 
+							<a target="_blank" onClick="ga('send', 'event', 'Link', 'Click', 'LASS-fb');" href="https://www.facebook.com/groups/1607718702812067/"> 社群討論</a> )</p>
+					</div>
+				</div>
+				<div class='col-xs-12 col-md-4'>
+					<div class="vertical-center" width="100%">
+						<img class="center-block" src="Pic/icons/addmore.png" style="max-width: 100%">
+					</div>
+					<div class='col-xs-12'>
+						<p class="text-center">歡迎更多社群方案加入!</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='row col-xs-12'>
+		<div class='col-md-10 col-md-offset-1' style="padding: 20px 60px 0px 60px;">
+			<h3><strong>或者，你已有獨立開發的感測器想要分享即時觀測值給零時觀測網可
+			<a target="_blank" onClick="ga('send', 'event', 'Link', 'Click', 'indie');" href="http://goo.gl/forms/Y95gdHCgIr">填寫此表單</a> 與我們聯絡。</strong></h3>
+		</div>
+		<div class='col-md-10 col-md-offset-1' style="padding: 20px 60px 0px 60px;">
+			<h3><strong><a href="/map.html">←返回地圖頁面</a></strong></h3>
+		</div>
+	</div>
+	<div id="footer" class="col-xs-12 center-block" style="margin-top: 40px">
+		<p class="text-center">本零時空汙觀測網僅彙整公開資料提供視覺化參考，並不對資料數據提供保證，實際測值以各資料來源為準。</p>
+		<p class="text-center">本網站由<a target="_blank" href="https://g0v.tw">g0v</a>零時空汙觀測專案專案小組開發維護，專案詳情請見<a target="_blank" href="http://beta.hackfoldr.org/g0vairmap">hackholdr</a>，原始碼公開於<a target="_blank" href="https://github.com/immortalmice/Real-time-Air-Quality-Map">Github-immortalmice</a>。</p>
+	</div>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-74669735-1', 'auto');
+		/*ga('require', 'linkid', 'linkid.js');*/
+		ga('send', 'pageview');
+	</script>
+	<script type="text/javascript">
+		var k = $(".vertical-center");
+		for(var element in k){
+			k.height(k.width() * 60 / 100);
+		}
+	</script>
+</body>
+</html>

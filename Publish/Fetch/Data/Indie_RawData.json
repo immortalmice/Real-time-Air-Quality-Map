@@ -1,10 +1,64 @@
 [{
 	"Channel_id" : 83508,
-	"SiteGroup" : "Pilot",
+	"SiteGroup" : "miaoski",
 	"Maker" : "Kiang",
 	"Option" : {
 		"Temperature" : "field2",
 		"Humidity" : "field3",
 		"Dust2_5" : "field1"
+	}
+}, {
+	"Channel_id" : 88846,
+	"SiteGroup" : "miaoski",
+	"Maker" : "miaoski",
+	"Option" : {
+		"Temperature" : "field2",
+		"Humidity" : "field3",
+		"Dust2_5" : "field1"
+	}
+}, {
+	"Channel_id" : 106666,
+	"SiteGroup" : "CCU NEAT",
+	"Maker" : "林俊翰",
+	"Option" : {
+		"Temperature" : "field1",
+		"Humidity" : "field2",
+		"Dust2_5" : "field3"
+	}
+}, {
+	"Channel_id" : 110747,
+	"SiteGroup" : "CCU 100",
+	"Maker" : "李皇辰",
+	"Option" : {
+		"Temperature" : "field1",
+		"Humidity" : "field2",
+		"Dust2_5" : "field3"
+	}
+}, {
+	"Channel_id" : 116320,
+	"SiteGroup" : "ES-AIR",
+	"Maker" : "Ethan",
+	"Option" : {
+		"Temperature" : "field5",
+		"Humidity" : "field4",
+		"Dust2_5" : "field1"
+	}
+}, {
+	"Channel_id" : 101099,
+	"SiteGroup" : "ES-AIR",
+	"Maker" : "CCU_ME",
+	"Option" : {
+		"Temperature" : "field6",
+		"Humidity" : "field5",
+		"Dust2_5" : "field1"
+	}
+}, {
+	"Channel_id" : 83205,
+	"SiteGroup" : "KS-001",
+	"Maker" : "D.T.Shaw",
+	"Option" : {
+		"Temperature" : "field4",
+		"Humidity" : "field5",
+		"Dust2_5" : "field7"
 	}
 }]

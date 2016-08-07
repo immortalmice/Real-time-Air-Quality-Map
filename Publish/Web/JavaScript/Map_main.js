@@ -4,11 +4,12 @@
 */
 
 /* Global Variable */
-var SiteGroups = ['ProbeCube', 'EPA', 'LASS', 'Indie'];
+var SiteGroups = ['ProbeCube', 'EPA', 'LASS', 'LASS4U', 'Indie', 'Airbox', 'Webduino'];
 var SiteGroups_isFinishedLoading = 0;
 var SitesData = [];
 
 var MainMap;
+var trafficLayer;
 var firstLoad = true;
 var showOptions = {
 	showType : "dust2_5",
@@ -16,9 +17,17 @@ var showOptions = {
 		ProbeCube : true,
 		EPA : true,
 		LASS : true,
-		Pilot : true
+		LASS4U : true,
+		miaoski : true,
+		Airbox : true,
+		"CCU NEAT" : true,
+		"CCU 100" :　true,
+		"ES-AIR" : true,
+		Webduino : true,
+		"KS-001" : true
 	},
-	timeRange : 14400000
+	timeRange : 14400000,
+	setTrafficLayer: false
 };
 var topInfoBubble = undefined;
 
@@ -29,6 +38,14 @@ var temp_gap = [0, 5, 10, 15, 20, 25, 30, 35, 40];
 var humi_gap = [20, 40, 60, 80];
 var dust2_5_gap = [11, 23, 35, 41, 47, 53, 58, 64, 70];
 var dust2_5_NASA_gap = [0, 3, 5, 8, 10, 13, 15, 18, 20, 35, 50, 65];
+
+var groupUrl = {
+	LASS: "https://github.com/LinkItONEDevGroup/LASS",
+	ProbeCube: "https://github.com/Lafudoci/ProbeCube",
+	AirBox: undefined,
+	EPA: "http://taqm.epa.gov.tw/taqm/tw/Pm25Index.aspx",
+	Pilot: "https://github.com/miaoski/pm25"
+};
 
 /* Suport Functions */
 function CreateMarker(element){
@@ -100,14 +117,19 @@ function IconUrl(element){
 	return str + arrary.length + '.png';
 }
 function fixSiteGroup(str){
-	if(str !== 'ProbeCube' && str !== 'EPA' && str !== 'LASS')
-		return 'Indie';
-	return str;
+	for(var i = 0; i <= SiteGroups.length-1; i ++){
+		if(str === 'LASS4U')
+			return 'LASS'
+		if(str === SiteGroups[i])
+			return str;
+	}
+	return 'Indie';
 }
 function showRawData(SiteName){
-	var RawData = SitesData.find(function(element, index, arrary){
+	var Site = SitesData.find(function(element, index, arrary){
 		return element.SiteName === SiteName;
-	}).RawData;
+	});
+	var RawData = Site.RawData;
 	var table_str = "";
 	table_str += "<tr>";
 	table_str += "<th>欄位</th>";
@@ -115,6 +137,8 @@ function showRawData(SiteName){
 	table_str += "</tr>";
 
 	for(var prop in RawData){
+		if(Site.SiteGroup === "Airbox" && prop === "device_id")
+			continue;
 		table_str += "<tr>";
 		table_str += "<td>" + prop + "</td>";
 		table_str += "<td>" + RawData[prop] + "</td>";
@@ -130,7 +154,7 @@ function setInfoBubbleContent(element){
     var infoBul = $('#infoBul');
     infoBul.html("<div class=\'row col-xs-12\'></div>");
     infoBul.children().append('<a id=\'thingspeakurl\'><p class=\'inline\' style=\'font-size: 32px; font-weight:500;\'>' + element.SiteName + '</p></a>');
-    infoBul.children().append('<img src=\'Pic/icons/' + fixSiteGroup(element.SiteGroup) + '.png\' height=\'36\' class=\'pull-right\'>');
+    infoBul.children().append('<img style=\"cursor: pointer;\" src=\'Pic/icons/' + fixSiteGroup(element.SiteGroup) + '.png\' height=\'36\' class=\'pull-right\' onclick=\"location.href=\'' + groupUrl[element.SiteGroup] + '\'\">');
     if(element.SiteGroup !== 'LASS'){
     	$("#thingspeakurl").attr("href", "http://api.thingspeak.com/channels/" + element.Channel_id );
     }else{
@@ -155,19 +179,20 @@ function setInfoBubbleContent(element){
     infos.children(':nth-child(4)').append('<p  class=\'pull-right\' style=\'font-size: 20px; font-weight:500;\'>' + ((element.Data.Dust2_5 || element.Data.Dust2_5 === 0) ? element.Data.Dust2_5.toFixed(0) : '--') + '&nbsp;μg/m<sup>3</sup></p>');
     infos.children(':nth-child(5)').append('<button class=\'btn btn-link btn-sm\' onclick=\'showRawData(\"' + element.SiteName + '\");\'>原始資料</button>');
     infos.children(':nth-child(6)').css({'padding-top' : '20px', 'padding-right' : '0px'});
-    infos.children(':nth-child(6)').append('<p class=\'inline\'>' + timegap(element.Data.Create_at) + '</p>');
+    infos.children(':nth-child(6)').append('<p style=\'font-size:12px\' class=\'inline\'>' + timegap(element.Data.Create_at) + '</p>');
     var chart = infoBul.children(':nth-child(2)').children(':nth-child(2)');
     $('#Chart').remove();
     chart.attr('id', 'Chart');
-    if(element.SiteGroup !== "LASS"){
+    if(element.SiteGroup !== "LASS" && element.SiteGroup !== "LASS4U" && element.SiteGroup !== "Airbox" && element.SiteGroup !== "Webduino"){
     	infos.children(':nth-child(6)').append('<button class=\"btn btn-info btn-sm pull-right\" onclick=\"location.href=\'/Data/History.html?chid=' + element.Channel_id + '&type=' + element.SiteGroup + '\'\">歷史資料</button>');
     	chart.html('<iframe height=\'360\' class=\'col-xs-12\' style=\'border:0px;margins:0px;padding: 0px;\' src=\'' + getChartUrl(element, "Dust2_5") + '\'></iframe>');
     }else{
-    	infos.children(':nth-child(6)').append('<button class=\"btn btn-info btn-sm pull-right\" onclick=\"location.href=\'http://nrl.iis.sinica.edu.tw/LASS/show.php?device_id=' + element.SiteName + '\'\">歷史資料</button>');
+    	var device_id = element.SiteGroup !== "Airbox" ? element.SiteName : element.RawData.device_id;
+    	infos.children(':nth-child(6)').append('<button class=\"btn btn-info btn-sm pull-right\" onclick=\"location.href=\'http://nrl.iis.sinica.edu.tw/LASS/show.php?device_id=' + device_id  + '\'\">歷史資料</button>');
 		chart.children("img").remove();
 		chart.addClass('vertical-center');
 		chart.html('<img class=\'center-block\' style=\'width: 36px;height: 36px;\' alt="Ajax loader" src="//thingspeak.com/assets/loader-transparent.gif"/>');
-		addSeries(element.SiteName, 2000, '#808080');
+		addSeries(device_id, 2000, '#808080');
     }
 }
 function getChartUrl(element, type){
@@ -178,7 +203,7 @@ function getChartUrl(element, type){
 		field = '5';
 	}
 	if(type === "Dust2_5"){
-		return "http://api.thingspeak.com/channels/" + element.Channel_id + "/charts/" + field + "?width=auto&height=auto&title=懸浮微粒PM2.5&days=1&average=30&dynamic=true&type=spline&color=grey&yaxismin=0&yaxis=μg/m3";
+		return "http://api.thingspeak.com/channels/" + element.Channel_id + "/charts/" + field + "?width=auto&height=auto&title=細懸浮微粒PM2.5&days=1&average=30&dynamic=true&type=spline&color=grey&yaxismin=0&yaxis=μg/m3";
 	}
 }
 function timeOffset(time1, time2){
@@ -224,6 +249,7 @@ function timegap(time){
 function applyShowOptions(Options){
 	for(var prop in Options)
 		showOptions[prop] = Options[prop];
+	trafficLayer.setMap(showOptions.setTrafficLayer ? MainMap : undefined);
 	$('#picbar').children('img').attr('src', 'Pic/icons/' + showOptions.showType + '_bar.png');
 	SitesData.forEach(function(element, index, arrary){
 		element.Marker.setIcon(IconUrl(element));
@@ -248,7 +274,7 @@ function applyShowOptions(Options){
 	        backgroundColor: '#ffffff',
 	        events: { }
 	      },
-	      title: { text: '<b>懸浮微粒PM2.5</b>' , useHTML: true},
+	      title: { text: '<b>細懸浮微粒PM2.5</b>' , useHTML: true},
 	      plotOptions: {
 	        series: {
 	          marker: { radius: 3 },
@@ -333,10 +359,10 @@ function applyShowOptions(Options){
 var infoConsole = {
 	div : 'info_console_div',
 	data : [],
-	MAXLENGTH : 10,
+	MAXLENGTH : 5,
 	write : function(str, html){
 		var out;
-		if(this.data.length > 10)
+		if(this.data.length > this.MAXLENGTH)
 			out = this.data.shift();
 		this.data.push('<p class=\'infoconsole text-right\'>' + str + '</p>');
 		$('#' + this.div).html(this.data.join(''));
@@ -429,18 +455,20 @@ function initialize(){
 		styles: stylesGray,
 		mapTypeControl: false
 	};
+	trafficLayer = new google.maps.TrafficLayer();
+	trafficLayer.__proto__.set('opacity' , 0.1);
 	/* Get Parameter */
 	if($("#order_channel").text() != "ORDER_CHANNEL"){
 		mapOptions.zoom = 14;
 	}
 	MainMap = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-	google.maps.event.addListener(MainMap, 'tilesloaded', function(){
+	google.maps.event.addListener(MainMap, 'idle', function(){
 		if(firstLoad){
 			$("#Loading").hide();
-			$("#picbardiv").css({"position" : "absolute",  "top" : "10px", "left" : "10px", "z-index": "2"});
+			$("#picbardiv").css({"position" : "absolute",  "bottom" : "210px", "left" : "10px", "z-index": "2"});
 			$("#picbardiv").attr("hidden", false);
-			$("#info_console_div").css({"position" : "absolute",  "bottom" : "80px", "right" : "45px", "z-index": "2"});
+			$("#info_console_div").css({"position" : "absolute",  "bottom" : "90px", "right" : "45px", "z-index": "2"});
 			$("#info_console_div").attr("hidden", false);
 			$("#picbar").html("<img class=\"bar\" style=\'height: 100%; margin: 0px;\' src=\"Pic/icons/dust2_5_bar.png\">");
 			firstLoad = false;
@@ -468,11 +496,34 @@ function initialize(){
 				ProbeCube : $("#PC").is(":checked"),
 				EPA : $("#EPA").is(":checked"),
 				LASS : $("#LA").is(":checked"),
-				Pilot : $("#Pilot").is(":checked")
+				LASS4U : $("#LA4U").is(":checked"),
+				Airbox : $("#AB").is(":checked"),
+				miaoski : $("#miaoski").is(":checked"),
+				"CCU NEAT" : $("#ccu").is(":checked"),
+				"CCU 100" : $("#ccu100").is(":checked"),
+				"ES-AIR" : $("#ES-AIR").is(":checked"),
+				Webduino : $("#Webduino").is(":checked"),
+				"KS-001" : $("#KS-001").is(":checked"),
 			},
-			timeRange : parseInt($("#timeRange").val())
+			timeRange : parseInt($("#timeRange").val()),
+			setTrafficLayer : $("#trafficLayerView").is(":checked")
 		});
 		$('#FilterModal').modal('hide');
+	});
+	$("#showType").change(function(event){
+		event.preventDefault();
+		applyShowOptions({showType: $('#showType').val()});
+	});
+	$("#selectAll").click(function(event){
+		for(var i = 1; i <= $("#selections").children().length; i ++){
+			$("#selections").children("div:nth-child(" + i + ")").children("label:nth-child(1)").children("input:nth-child(1)").prop("checked", true);
+		}
+	});
+	$("#reverseSelect").click(function(event){
+		for(var i = 1; i <= $("#selections").children().length; i ++){
+			var ele = $("#selections").children("div:nth-child(" + i + ")").children("label:nth-child(1)").children("input:nth-child(1)");
+			ele.prop("checked", !ele.is(":checked"));
+		}
 	});
 	setTimeout('updateTool.start();', updateTool.gap);
 }

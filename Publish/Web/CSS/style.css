@@ -1,7 +1,9 @@
 *{
 	font-family: "Microsoft JhengHei";
 }
-
+p{
+	font-size: 18px;
+}
 .nav-pills > li.active > a {
     background-color: #5cb85c;
 }

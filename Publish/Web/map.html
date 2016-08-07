@@ -1,46 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html  xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:og="http://ogp.me/ns#" >
 <head>
+	<meta name="google-site-verification" content="CjZDE_CDpSTE9X0FOGMzFuDXRQbAO_T5WMoRkQv9Ozo" />
+	<meta name="description" content="g0v零時空汙觀測網 - 最即時、最多觀測來源的的空汙視覺化地圖！" />
+	<meta name="keywords" content="g0v,空污,空汙,空氣污染,LASS,ProbeCube,AirBox,空氣盒子,g0v觀測網" />
+
+	<meta property="og:title" content="g0v零時空汙觀測網"></meta>
+	<meta property="og:description" content="g0v零時空汙觀測網 - 最即時、最多觀測來源的的空汙視覺化地圖！">
+	<meta property="og:type" content="website"></meta>
+	<meta property="og:url" content="http://g0vAirMap.3203.info/map.html"/></meta>
+	<meta property="og:image" content="http://g0vAirMap.3203.info/Pic/icons/fbgo-l.png"/>
+
+
+	<link rel="apple-touch-icon" href="http://g0vAirMap.3203.info/Pic/icons/apple-touch-icon.png" /> 
+	<link rel="apple-touch-icon" sizes="57x57" href="http://g0vAirMap.3203.info/Pic/icons/apple-touch-icon-57x57.png" /> 
+	<link rel="apple-touch-icon" sizes="76x76" href="http://g0vAirMap.3203.info/Pic/icons/apple-touch-icon-76x76.png" /> 
+	<link rel="apple-touch-icon" sizes="120x120" href="http://g0vAirMap.3203.info/Pic/icons/apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="http://g0vAirMap.3203.info/Pic/icons/apple-touch-icon-152x152.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="http://g0vAirMap.3203.info/Pic/icons/apple-touch-icon-180x180.png" />
 	<link href="icon.ico" rel="SHORTCUT ICON">
 	<title>零時空汙觀測網</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="CSS/style.css">
-	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBs9C2vEzW4DVOFNwtSwjD_3jOmLjc6UYY&sensor=true"></script>
-	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js"></script>
-    <script type="text/javascript" src="//thingspeak.com/highcharts-3.0.8.js"></script>
-    <script type="text/javascript" src="//thingspeak.com/exporting.js"></script>
-	<script type="text/javascript" src = 'JavaScript/Map_main.js'></script>
 </head>
 <body onload="initialize()">
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-74669735-1', 'auto');
+		/*ga('require', 'linkid', 'linkid.js');*/
+		ga('send', 'pageview');
+	</script>
 	<div class='row col-xs-12'>
 		<div class='col-md-10 col-md-offset-1'>
-			<img src="Pic/icons/g0v.png" height='75px' id="titlepic" onclick="location.href='/map.html'">
+			<a href="/map.html"><img src="Pic/icons/g0v.png" height='75px' id="titlepic"></a>
+			<a style="font-size: 35px" href="/recruit.html" onClick="ga('send', 'event', 'Link', 'Click', 'recruit');">
+				<img src="Pic/icons/recruit2.png" height='40px'>
+				<span class="glyphicon glyphicon-hand-left"></span>
+			</a>
 		</div>
 	</div>
 	<div class='row col-xs-12'>
 		<div class='col-xs-12 col-xs-offset-0 col-md-10 col-md-offset-1'>
 			<div id="dis" class="row">
-				<div id='picbardiv' hidden="true" width='700px' style="z-index: 2; height: 40px;">
-					<h4 style="z-index: 2">圖層&nbsp
-						<button class='btn btn-default btn-sm' onclick="applyShowOptions({showType:'dust2_5'});">PM2.5&nbsp(環保署分級)</button>
-						<button class='btn btn-default btn-sm' onclick="applyShowOptions({showType:'dust2_5_NASA'});">PM2.5&nbsp(NASA分級)</button>
-						<button class='btn btn-default btn-sm' onclick="applyShowOptions({showType:'temp'});">氣溫</button>
-						<button class='btn btn-default btn-sm' onclick="applyShowOptions({showType:'humi'});">濕度</button>
-						<button class='btn btn-info btn-sm' data-toggle="modal" data-target="#FilterModal">條件篩選</button>
-						<button id="livebtn" style="margin-right: 20px" class="btn btn-danger btn-sm" onclick = "shutlive();">停止即時更新</button>
-					</h4>
-					<div class="row" style="z-index: 2">
-						<div class="col-md-12" id='picbar' style="height: 30px"></div>
+				<div id='picbardiv' hidden="true" style="z-index: 2; height: 40px;margin-left: 5px">
+					<div style="z-index: 2">
+						<div>
+							<button  style="margin-left: 15px" class='btn btn-info btn-sm' data-toggle="modal" data-target="#FilterModal">條件篩選</button>
+							<button id="livebtn" class="btn btn-danger btn-sm" onclick = "shutlive();">停止即時更新</button>
+						</div>
+						<div>
+							<p class="inline">&nbsp&nbsp圖層&nbsp</p>
+							<div style="margin: 10px 0px 10px 0px; display: inline-block;">
+						    	<select id="showType" class="form-control">
+								  	<option value='dust2_5' selected>PM2.5&nbsp(環保署分級)</option>
+								  	<option value='dust2_5_NASA'>PM2.5&nbsp(NASA分級)</option>
+								  	<option value='temp'>氣溫</option>
+								  	<option value='humi'>濕度</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div style="z-index: 2; margin: 0px">
+						<div id='picbar' style="height: 30px;"></div>
+						<div style="margin-top: 10px"><a data-toggle="modal" data-target="#PM25info" style="cursor: pointer;"><span class="glyphicon glyphicon-info-sign"></span>&nbsp即時濃度值對照顏色分級說明</a></div>
 					</div>
 				</div>
 				<div id='info_console_div' width='100px' height='20px' hidden="true"></div>
 				<div id="map" class="col-xs-12 center-block">載入中</div>
 				<div id="footer" class="col-xs-12 center-block" style="margin-top: 10px">
-					<p class="text-center">本觀測網僅彙整公開資料提供視覺化參考，並不對資料數據提供保證，實際測值以各資料來源為準。</p>
-					<p class="text-center">本網站由ProbeCube專案小組技術提供，原始碼公開於<a href="https://github.com/immortalmice/Real-time-Air-Quality-Map">Github-immortalmice</a>。</p>
+					<p class="text-center">本零時空汙觀測網僅彙整公開資料提供視覺化參考，並不對資料數據提供保證，實際測值以各資料來源為準。</p>
+					<p class="text-center">本網站由<a target="_blank" href="https://g0v.tw">g0v</a>零時空汙觀測專案專案小組開發維護，專案詳情請見<a target="_blank" href="http://beta.hackfoldr.org/g0vairmap">hackholdr</a>，原始碼公開於<a target="_blank" href="https://github.com/immortalmice/Real-time-Air-Quality-Map">Github-immortalmice</a>。</p>
 				</div>
 			</div>
 		</div>
@@ -57,7 +92,9 @@
 	      			<form id="filterset" role="form">
 	      				<div class="form-group">
 		      				<label>你想顯示來自那些類型的測站？</label>
-		      				<div style="margin-left: 20px">
+		      				<input type="button" id="selectAll" class="btn btn-sm btn-default" value="全選">
+		      				<input type="button" id="reverseSelect" class="btn btn-sm btn-default" value="反向選擇">
+		      				<div id="selections" style="margin-left: 20px">
 							  	<div class="checkbox">
 							    	<label>
 							    		<input id='PC' type='checkbox' checked>ProbeCube
@@ -70,12 +107,47 @@
 							  	</div>
 							  	<div class="checkbox">
 							    	<label>
+							    		<input id='LA4U' type='checkbox' checked>LASS4U
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
 							    		<input id='EPA' type='checkbox' checked>EPA(環保署)
 							    	</label>
 							  	</div>
 							  	<div class="checkbox">
 							    	<label>
-							    		<input id='Pilot' type='checkbox' checked>Pilot
+							    		<input id='AB' type='checkbox' checked>Airbox(台北市空氣盒子)
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='Webduino' type='checkbox' checked>高雄市校園空氣品質監測計畫
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='miaoski' type='checkbox' checked>Miaoski(獨立觀測專案)
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='ccu' type='checkbox' checked>CCU NEAT(獨立觀測專案)
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='ccu100' type='checkbox' checked>CCU 100(獨立觀測專案)
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='ES-AIR' type='checkbox' checked>ES-AIR(獨立觀測專案)
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='KS-001' type='checkbox' checked>KS-001(獨立觀測專案)
 							    	</label>
 							  	</div>
 							</div>
@@ -93,6 +165,15 @@
 							  	<option value='-1'>全部</option>
 							</select>
 					  	</div>
+					  	<div class="form-group">
+		      				<div style="margin-left: 20px">
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='trafficLayerView' type='checkbox'>路況顯示
+							    	</label>
+							  	</div>
+							</div>
+						</div>
 					  	<button type="submit" class="btn btn-default">送出</button>
 					</form>
 	      		</div>
@@ -113,6 +194,26 @@
 	    	</div>
 	  	</div>
 	</div>
+	<div class="modal fade" id="PM25info" tabindex="-1" role="dialog" aria-labelledby="PM25infoLabel" aria-hidden="true">
+	  	<div class="modal-dialog">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<h4 class="modal-title" id="PM25infoLabel">即時濃度值對照顏色分級說明</h4>
+	      		</div>
+	      		<div class="modal-body">
+	      			<p style="font-size: 14px">&nbsp&nbsp&nbsp&nbsp本網頁所呈現之PM2.5濃度為即時數值，而行政院環境保護署所訂定之國家標準是24小時平均值，其空品測站數據是以「移動平均值」計算。</p>
+	      			<p style="font-size: 14px">（移動平均值計算方式：0.5 × 前12小時平均 + 0.5 × 前4小時平均）</p>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
 	<p id="order_channel" hidden="true">ORDER_CHANNEL</p>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBs9C2vEzW4DVOFNwtSwjD_3jOmLjc6UYY"></script>
+	<script type="text/javascript" src="https://googlemaps.github.io/js-info-bubble/src/infobubble.js"></script>
+    <script type="text/javascript" src="//thingspeak.com/highcharts-3.0.8.js"></script>
+    <script type="text/javascript" src="//thingspeak.com/exporting.js"></script>
+	<script type="text/javascript" src = 'JavaScript/Map_main.js'></script>
 </body>
 </html>

@@ -15,7 +15,7 @@ var DataDir = __dirname + '/Fetch/Data/';
 var counter = 0;
 var AllData = {};
 var jsonFinished = true;
-var SiteGroups = ["ProbeCube", "LASS", "EPA", "Indie"];
+var SiteGroups = ["ProbeCube", "LASS", "EPA", "Indie", "Airbox", "Webduino"];
 
 /* Callback Functions */
 var to_index = function(request, response){
