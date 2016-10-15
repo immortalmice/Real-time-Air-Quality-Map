@@ -1,10 +1,9 @@
 {
   "status": "beta",
-  "name": "",
+  "name": "Real-time-Air-Quality-Map",
   "name_zh": "零時空汙觀測網",
   "description": "collect air polution data from censors and provide real-time visualization in a map",
-  "description_zh": "整合各方空汙監測站的觀測資料與各種汙染源的排放資料以地圖視覺化呈現
-清楚明瞭的即時空汙動態追蹤，以此達到排汙監督的社會效益",
+  "description_zh": "整合各方空汙監測站的觀測資料與各種汙染源的排放資料以地圖視覺化呈現清楚明瞭的即時空汙動態追蹤，以此達到排汙監督的社會效益",
   "document": "http://beta.hackfoldr.org/g0vairmap",
   "homepage": "https://github.com/immortalmice/Real-time-Air-Quality-Map",
   "repository": {
