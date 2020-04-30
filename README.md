@@ -52,6 +52,12 @@ FetchServer.js 會依據所登錄的站點類別，前去撈取最新一筆的�
 map.html 會抓取由FetchServer.js 整理好的json格式資料，展現於地圖上<br/>
 另外非LASS站點可點擊視窗中的歷史資料翻找舊的資料，LASS站點則是連網往LASS專案的網頁<br/>
 
-成果展現
+成果展現(已搬家)
 ------
 http://g0vairmap.3203.info/
+
+
+註
+------
+G0V零時空污觀測網現已由[Asper](https://github.com/Asperhsu)接手後續開發及維護
+新的網站網址為 https://v5.airmap.g0v.tw/#/map
